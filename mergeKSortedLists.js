@@ -15,12 +15,15 @@ If we use a heap, complexity becomes O(n log k)
 
 */
 
-
+function ListNode(val) {
+    this.val = val;
+    this.next = null;
+}
 
 let list1 = new ListNode(1);
 list1.next = new ListNode(4);
 list1.next.next = new ListNode(5);
-list2.next.next.next = new ListNode(null);
+list1.next.next.next = new ListNode(null);
 
 let list2 = new ListNode(1);
 list2.next = new ListNode(3);
