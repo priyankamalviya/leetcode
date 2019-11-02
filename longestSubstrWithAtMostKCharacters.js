@@ -1,5 +1,13 @@
+/* Q.340 HARD
+Given a string, find the length of the longest substring T that contains at most k distinct characters.
 
-var lengthOfLongestSubstringKDistinct = function(s, k) {
+Example 1:
+
+Input: s = "eceba", k = 2
+Output: 3
+Explanation: T is "ece" which its length is 3.
+*/
+var lengthOfLongestSubstringKDistinct = function (s, k) {
     let [map, start, result] = [new Map(), 0, 0];
     [...s].forEach((key, i) => {
         map.set(key, i);
