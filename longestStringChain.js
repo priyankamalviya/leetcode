@@ -1,5 +1,6 @@
 var longestStrChain = function (words) {
     let DP = {};
+    words.sort((a, b) => a.length - b.length);
     for (let word of words) {
         let longest = 0;
         for (let i = 0; i < words.length; i++) {
@@ -12,4 +13,6 @@ var longestStrChain = function (words) {
 };
 
 
-console.log(longestStrChain(["a", "b", "ba", "bca", "bda", "bdca"]));
+// console.log(longestStrChain(["a", "b", "ba", "bca", "bda", "bdca"]));
+
+console.log(longestStrChain(["ksqvsyq", "ks", "kss", "czvh", "zczpzvdhx", "zczpzvh", "zczpzvhx", "zcpzvh", "zczvh", "gr", "grukmj", "ksqvsq", "gruj", "kssq", "ksqsq", "grukkmj", "grukj", "zczpzfvdhx", "gru"]));
