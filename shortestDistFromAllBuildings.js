@@ -6,76 +6,56 @@ Each 1 marks a building which you cannot pass through.
 Each 2 marks an obstacle which you cannot pass through.
 */
 
+const DIRECTIONS = [
+    [0, 1],
+    [1, 0],
+    [0, -1],
+    [-1, 0]
+];
+
+function distanceFromBuilding(grid, r, c, distance, start) {
+    const rows = grid.length;
+    const cols = grid[0].length;
+    const queue = [
+        [r, c, 1]
+    ];
+    let qIndex = 0;
+    let minDistance = Infinity;
+    while (qIndex < queue.length) {
+        const [r0, c0, d] = queue[qIndex]; // Do this to avoid queue.shift everytime.
+        for (const [dr, dc] of DIRECTIONS) {
+            const r1 = r0 + dr;
+            const c1 = c0 + dc;
+            if (0 <= r1 && r1 < rows && 0 <= c1 && c1 < cols && grid[r1][c1] === start) {
+                distance[r1][c1] += d;
+                minDistance = Math.min(minDistance, distance[r1][c1]);
+                grid[r1][c1] -= 1;
+                queue.push([r1, c1, d + 1]);
+            }
+        }
+        qIndex += 1;
+    }
+    return minDistance;
+}
+
 var shortestDistance = function (grid) {
-    let width = grid[0].length,
-        height = grid.length,
-        dirs = [
-            [-1, 0],
-            [0, -1],
-            [0, 1],
-            [1, 0]
-        ];
-    let dist = 0,
-        res = Infinity,
-        house = 1,
-        houseCount = 0,
-        avoidArea = [],
-        road = -1;
-    for (let i = 0; i < height; i++) {
-        for (let j = 0; j < width; j++) {
-            const num = grid[i][j];
-            if (num === 1) {
-                houseCount++;
-            }
-        }
-    }
-
-    for (let i = 0; i < height; i++) {
-        for (let j = 0; j < width; j++) {
-            const num = grid[i][j];
-            if (num <= 0 && avoidArea.indexOf(num) < 0) {
-                let temp = bfs([
-                    [i, j, -1, 0]
-                ], house, num, road);
-                if (temp < houseCount) {
-                    avoidArea.push(road);
-                } else {
-                    res = Math.min(dist, res);
+    const rows = grid.length;
+    const cols = grid[0].length;
+    const distance = new Array(rows).fill(null).map(() => new Array(cols).fill(0));
+    let start = 0;
+    let minDistance = 0;
+    for (let r = 0; r < rows; r += 1) {
+        for (let c = 0; c < cols; c += 1) {
+            if (grid[r][c] === 1) {
+                minDistance = distanceFromBuilding(grid, r, c, distance, start);
+                if (minDistance === Infinity) { // Early exit if one building cannot reach.
+                    return -1;
                 }
-                road--;
-                house = house + 2;
-                dist = 0;
+                start -= 1;
             }
         }
     }
-    return res !== Infinity ? res : -1;
-
-    function bfs(queue, house, road, checkedRoad) {
-        let hc = 0;
-        while (queue.length > 0) {
-            let y = queue[0][0],
-                x = queue[0][1],
-                direction = queue[0][2],
-                path = queue[0][3];
-            if (y > -1 && y < height && x > -1 && x < width) {
-                const num = grid[y][x];
-                if (num > 0 && num !== 2 && num <= house) {
-                    grid[y][x] = house + 2;
-                    dist += path;
-                    hc++;
-                } else if (num === road) {
-                    grid[y][x] = checkedRoad;
-                    for (let i = 0; i < 4; i++) {
-                        if (i != 3 - direction) {
-                            queue.push([y + dirs[i][0], x + dirs[i][1], i, path + 1]);
-                        }
-                    }
-                }
-            }
-            queue.shift();
-        }
-        return hc;
-    }
+    return minDistance;
 };
 
 console.log(shortestDistance([

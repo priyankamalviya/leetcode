@@ -13,6 +13,6 @@ var longestStrChain = function (words) {
 };
 
 
-// console.log(longestStrChain(["a", "b", "ba", "bca", "bda", "bdca"]));
+console.log(longestStrChain(["a", "b", "ba", "bca", "bda", "bdca"]));
 
-console.log(longestStrChain(["ksqvsyq", "ks", "kss", "czvh", "zczpzvdhx", "zczpzvh", "zczpzvhx", "zcpzvh", "zczvh", "gr", "grukmj", "ksqvsq", "gruj", "kssq", "ksqsq", "grukkmj", "grukj", "zczpzfvdhx", "gru"]));
+// console.log(longestStrChain(["ksqvsyq", "ks", "kss", "czvh", "zczpzvdhx", "zczpzvh", "zczpzvhx", "zcpzvh", "zczvh", "gr", "grukmj", "ksqvsq", "gruj", "kssq", "ksqsq", "grukkmj", "grukj", "zczpzfvdhx", "gru"]));
